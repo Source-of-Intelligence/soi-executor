@@ -9,9 +9,9 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/Source-of-Intelligence/soi-executor/pkg/types"
 	"github.com/tetratelabs/wazero"
 	"github.com/tetratelabs/wazero/api"
-	"wasm-executor/pkg/types"
 )
 
 // ContextData 可注入WASM的上下文数据

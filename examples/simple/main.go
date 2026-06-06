@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"log"
 
-	"wasm-executor/pkg/engine"
+	"github.com/Source-of-Intelligence/soi-executor/pkg/engine"
 )
 
 // 简单的WASM字节码 (add 函数: 返回两个参数的和)

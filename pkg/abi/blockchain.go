@@ -8,8 +8,8 @@ import (
 	"encoding/binary"
 	"fmt"
 
+	"github.com/Source-of-Intelligence/soi-executor/pkg/types"
 	"github.com/tetratelabs/wazero/api"
-	"wasm-executor/pkg/types"
 )
 
 // BlockchainContext 区块链上下文

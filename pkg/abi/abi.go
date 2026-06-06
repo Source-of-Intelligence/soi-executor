@@ -6,7 +6,7 @@ package abi
 import (
 	"fmt"
 
-	"wasm-executor/pkg/types"
+	"github.com/Source-of-Intelligence/soi-executor/pkg/types"
 )
 
 // Manager ABI管理器

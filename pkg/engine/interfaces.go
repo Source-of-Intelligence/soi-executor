@@ -4,7 +4,7 @@
 package engine
 
 import (
-	"wasm-executor/pkg/types"
+	"github.com/Source-of-Intelligence/soi-executor/pkg/types"
 )
 
 // RuntimeInterface 运行时接口，供ABI和Context包使用

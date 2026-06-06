@@ -9,8 +9,8 @@ import (
 	"fmt"
 	"os"
 
-	"wasm-executor/pkg/abi"
-	"wasm-executor/pkg/engine"
+	"github.com/Source-of-Intelligence/soi-executor/pkg/abi"
+	"github.com/Source-of-Intelligence/soi-executor/pkg/engine"
 )
 
 func main() {

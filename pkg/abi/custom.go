@@ -7,7 +7,7 @@ import (
 	"context"
 	"fmt"
 
-	"wasm-executor/pkg/types"
+	"github.com/Source-of-Intelligence/soi-executor/pkg/types"
 )
 
 // CustomABI 自定义ABI实现
