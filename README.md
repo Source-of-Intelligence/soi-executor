@@ -60,7 +60,7 @@ wasm-executor/
 ### 安装
 
 ```bash
-go get wasm-executor
+go get github.com/Source-of-Intelligence/soi-executor
 ```
 
 ### 基础使用
@@ -70,7 +70,7 @@ package main
 
 import (
     "context"
-    "wasm-executor/pkg/engine"
+    "github.com/Source-of-Intelligence/soi-executor/pkg/engine"
 )
 
 func main() {
@@ -108,7 +108,7 @@ func main() {
 ```go
 import (
     "context"
-    "wasm-executor/pkg/soi"
+    "github.com/Source-of-Intelligence/soi-executor/pkg/soi"
     "github.com/Source-of-Intelligence/soi-vos"
 )
 
@@ -134,7 +134,7 @@ func main() {
 ### 使用自定义 ABI
 
 ```go
-import "wasm-executor/pkg/abi"
+import "github.com/Source-of-Intelligence/soi-executor/pkg/abi"
 
 // 创建自定义 ABI
 customABI := abi.NewCustomABIBuilder("my_abi", "1.0.0").
