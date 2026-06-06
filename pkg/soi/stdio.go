@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"soi.dev/soi-vos"
-	"wasm-executor/pkg/engine"
+	"github.com/Source-of-Intelligence/soi-executor/pkg/engine"
+	"github.com/Source-of-Intelligence/soi-vos"
 )
 
 // StdioPlugin wraps a standard Go WASM module (wasip1) that communicates

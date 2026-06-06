@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/Source-of-Intelligence/soi-executor/pkg/abi"
+	"github.com/Source-of-Intelligence/soi-executor/pkg/engine"
 	"github.com/tetratelabs/wazero/api"
-	"wasm-executor/pkg/abi"
-	"wasm-executor/pkg/engine"
 )
 
 // testCustomWASM 是一个简单的WASM模块，导入 "env" 模块的自定义函数

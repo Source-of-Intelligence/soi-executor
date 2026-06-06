@@ -3,16 +3,16 @@
 // through the standard wasm-executor engine.
 //
 // The SOI ABI defines host functions (soi_log, soi_now, etc.) and an execution
-// protocol (soi_init / soi_execute) that TinyGo-compiled SOI plugins export.
+// protocol (execute) that SOI plugins export.
 package soi
 
 import (
 	"context"
 	"encoding/json"
 
+	"github.com/Source-of-Intelligence/soi-executor/pkg/types"
+	"github.com/Source-of-Intelligence/soi-vos"
 	"github.com/tetratelabs/wazero/api"
-	"soi.dev/soi-vos"
-	"wasm-executor/pkg/types"
 )
 
 // SOIABI implements the types.ABI interface for SOI WASM plugins.

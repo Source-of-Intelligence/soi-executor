@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/Source-of-Intelligence/soi-executor/pkg/abi"
+	wasmctx "github.com/Source-of-Intelligence/soi-executor/pkg/context"
 	"github.com/tetratelabs/wazero"
-	"wasm-executor/pkg/abi"
-	wasmctx "wasm-executor/pkg/context"
 )
 
 // Executor 高级WASM执行器

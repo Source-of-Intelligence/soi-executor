@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"log"
 
-	"wasm-executor/pkg/abi"
-	"wasm-executor/pkg/engine"
+	"github.com/Source-of-Intelligence/soi-executor/pkg/abi"
+	"github.com/Source-of-Intelligence/soi-executor/pkg/engine"
 )
 
 // SimpleStorage 简单存储实现

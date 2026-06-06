@@ -1,4 +1,4 @@
-# wasm-executor — Pure WASM Execution Engine
+# soi-executor — Pure WASM Execution Engine
 
 基于 [wazero](https://github.com/tetratelabs/wazero) 的纯 WASM 执行引擎，为 SOI 生态提供 WASM 模块加载、实例化和执行能力。
 
@@ -109,7 +109,7 @@ func main() {
 import (
     "context"
     "wasm-executor/pkg/soi"
-    "soi.dev/soi-vos"
+    "github.com/Source-of-Intelligence/soi-vos"
 )
 
 func main() {
@@ -224,7 +224,7 @@ func (a *MyABI) SetupHostFunctions(ctx context.Context, runtime *engine.Runtime,
 | 依赖 | 用途 |
 |------|------|
 | `github.com/tetratelabs/wazero` | WASM 运行时 |
-| `soi.dev/soi-vos` | SOI 契约层（HostFunctions 接口、ABI 常量） |
+| `github.com/Source-of-Intelligence/soi-vos` | SOI 契约层（HostFunctions 接口、ABI 常量） |
 
 ## 许可证
 

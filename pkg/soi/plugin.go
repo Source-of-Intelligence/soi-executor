@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"soi.dev/soi-vos"
-	"wasm-executor/pkg/engine"
+	"github.com/Source-of-Intelligence/soi-executor/pkg/engine"
+	"github.com/Source-of-Intelligence/soi-vos"
 )
 
-// ExecutionRequest is the JSON payload passed to soi_execute.
+// ExecutionRequest is the JSON payload passed to execute.
 type ExecutionRequest struct {
 	Tool        string          `json:"tool"`
 	Args        json.RawMessage `json:"args"`
@@ -17,7 +17,7 @@ type ExecutionRequest struct {
 }
 
 // SOIPlugin wraps a compiled SOI WASM module with the wasm-executor engine.
-// It handles loading, initialization (soi_init), and tool execution (soi_execute).
+// It handles loading and tool execution via the unified "execute" entry point.
 type SOIPlugin struct {
 	executor   *engine.Executor
 	moduleName string
@@ -47,26 +47,24 @@ func NewSOIPlugin(ctx context.Context, wasmBytes []byte, host vos.HostFunctions)
 		return nil, fmt.Errorf("load module: %w", err)
 	}
 
-	// 调用 soi_init 注册工具
+	// Verify the "execute" export exists
 	mod, ok := exec.GetRuntime().GetModule(moduleName)
 	if !ok {
 		exec.Close()
 		return nil, fmt.Errorf("module %s not instantiated after load", moduleName)
 	}
 
-	initFn := mod.ExportedFunction(vos.ExportInit)
-	if initFn != nil {
-		_, err := initFn.Call(ctx)
-		if err != nil {
-			exec.Close()
-			return nil, fmt.Errorf("soi_init failed: %w", err)
-		}
+	execFn := mod.ExportedFunction(vos.ExportExecute)
+	if execFn == nil {
+		exec.Close()
+		return nil, fmt.Errorf("export function %s not found in module", vos.ExportExecute)
 	}
+	_ = execFn // will be called in Execute()
 
 	return &SOIPlugin{executor: exec, moduleName: moduleName}, nil
 }
 
-// Execute runs a tool call on the SOI plugin via the export ABI (soi_execute).
+// Execute runs a tool call on the SOI plugin via the unified "execute" entry point.
 func (p *SOIPlugin) Execute(ctx context.Context, toolName string, args map[string]interface{}) ([]byte, error) {
 	req := ExecutionRequest{
 		Tool: toolName,
@@ -87,13 +85,13 @@ func (p *SOIPlugin) Execute(ctx context.Context, toolName string, args map[strin
 	inputPtr := uint32(vos.MemoryReservedSize)
 	mod.Memory().Write(inputPtr, reqJSON)
 
-	// Call soi_execute(ptr, length)
-	soiExec := mod.ExportedFunction(vos.ExportExecute)
-	if soiExec == nil {
+	// Call execute(ptr, length)
+	execFn := mod.ExportedFunction(vos.ExportExecute)
+	if execFn == nil {
 		return nil, fmt.Errorf("function %s not found in module", vos.ExportExecute)
 	}
 
-	results, err := soiExec.Call(ctx, uint64(inputPtr), uint64(len(reqJSON)))
+	results, err := execFn.Call(ctx, uint64(inputPtr), uint64(len(reqJSON)))
 	if err != nil {
 		return nil, fmt.Errorf("wasm execute: %w", err)
 	}
