@@ -1,4 +1,4 @@
-module wasm-executor
+module soi-executor
 
 go 1.22.0
 
