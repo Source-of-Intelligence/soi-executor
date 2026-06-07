@@ -73,7 +73,7 @@ func NewRuntime(ctx context.Context, config *RuntimeConfig) (*Runtime, error) {
 	// Pre-allocate max memory to avoid runtime memory.grow,
 	// which would invalidate TinyGo's unsafe.Pointer references.
 	rConfig := wazero.NewRuntimeConfig().
-		WithMemoryLimitPages(64).       // 64 pages = 4MB max
+		WithMemoryLimitPages(256).      // 256 pages = 16MB max
 		WithMemoryCapacityFromMax(true) // eagerly allocate, avoid re-allocations
 	rt := wazero.NewRuntimeWithConfig(ctx, rConfig)
 
