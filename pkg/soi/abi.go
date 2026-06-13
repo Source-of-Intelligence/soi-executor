@@ -89,6 +89,12 @@ func (s *SOIABI) SetupHostFunctions(ctx context.Context, runtime types.RuntimeIn
 			[]api.ValueType{api.ValueTypeI64, api.ValueTypeI64}, []api.ValueType{api.ValueTypeI64}).
 		Export(vos.HostSandboxExec)
 
+	// soi_sandbox_http(req_ptr:i64, req_len:i64) → i64
+	builder.NewFunctionBuilder().
+		WithGoModuleFunction(api.GoModuleFunc(s.hostSandboxHttp),
+			[]api.ValueType{api.ValueTypeI64, api.ValueTypeI64}, []api.ValueType{api.ValueTypeI64}).
+		Export(vos.HostSandboxHttp)
+
 	_, err := builder.Instantiate(ctx)
 	return err
 }
@@ -176,6 +182,25 @@ func (s *SOIABI) hostSandboxExec(ctx context.Context, mod api.Module, stack []ui
 		data = []byte(`{"error":"` + err.Error() + `"}`)
 	} else {
 		data, _ = json.Marshal(result)
+	}
+	stack[0] = writePacked(mod, data)
+}
+
+// soi_sandbox_http(req_ptr:i64, req_len:i64) → i64
+func (s *SOIABI) hostSandboxHttp(ctx context.Context, mod api.Module, stack []uint64) {
+	reqJSON := readStr(mod, uint32(stack[0]), uint32(stack[1]))
+	var req vos.HttpRequest
+	if err := json.Unmarshal([]byte(reqJSON), &req); err != nil {
+		errJSON, _ := json.Marshal(map[string]string{"error": "invalid request JSON: " + err.Error()})
+		stack[0] = writePacked(mod, errJSON)
+		return
+	}
+	resp, err := s.host.SandboxHttp(&req)
+	var data []byte
+	if err != nil {
+		data = []byte(`{"error":"` + err.Error() + `"}`)
+	} else {
+		data, _ = json.Marshal(resp)
 	}
 	stack[0] = writePacked(mod, data)
 }
