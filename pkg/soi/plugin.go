@@ -9,6 +9,11 @@ import (
 	"github.com/Source-of-Intelligence/soi-vos"
 )
 
+// MaxResultReadSize caps the number of bytes read from WASM linear memory
+// when retrieving a plugin's response, preventing a malicious plugin from
+// exhausting host memory by writing a very large result pointer.
+const MaxResultReadSize = 16 * 1024 * 1024 // 16 MB
+
 // ExecutionRequest is the JSON payload passed to execute.
 type ExecutionRequest struct {
 	Tool        string          `json:"tool"`
