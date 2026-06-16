@@ -12,7 +12,7 @@ import (
 // MaxResultReadSize caps the number of bytes read from WASM linear memory
 // when retrieving a plugin's response, preventing a malicious plugin from
 // exhausting host memory by writing a very large result pointer.
-const MaxResultReadSize = 16 * 1024 * 1024 // 16 MB
+const MaxResultReadSize = 32 * 1024 * 1024 // 32 MB
 
 // ExecutionRequest is the JSON payload passed to execute.
 type ExecutionRequest struct {
